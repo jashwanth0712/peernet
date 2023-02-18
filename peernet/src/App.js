@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './App.css'
+import CreateFlow from './components/createflow';
 export default function App(){
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
+
 
     return (
      <div className='Column'>
@@ -18,6 +19,7 @@ export default function App(){
         <li><a href="#">Contact</a></li>
       </ul>
     </nav>
+    <CreateFlow/>
       <div className="Row">
         <div className="Column">
           <div className="card">
@@ -29,9 +31,9 @@ export default function App(){
             <div className="card-info">
               <p className="title">Magic Card</p>
             </div>
-          </div>
         </div>
-        <div className="Rotating_card"  style={{ textAlign: 'right',position:'absolute' , right:'50' }}>
+        </div>
+          <div className="Rotating_card"  >
         <h2>CARD</h2>
         </div>
       </div>
