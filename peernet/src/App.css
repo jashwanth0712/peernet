@@ -1,6 +1,11 @@
 .Complete{
   background-color: #212121;
   width:100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
   height: 100vh;
 }
 .App {

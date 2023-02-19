@@ -111,12 +111,14 @@
 
    /* ---------------------------------toggle button animation---------------------- */
    .switch {
-    --circle-dim: 2.8em;
+    margin-left: 50px;
+    margin-top: 30px;
+    --circle-dim: 4.56em;
     font-size: 17px;
     position: relative;
     display: inline-block;
-    width: 11em;
-    height: 4em;
+    width: 16.5em;
+    height: 6em;
   }
   
   /* Hide default HTML checkbox */
@@ -137,7 +139,7 @@
     background-color: #f5aeae;
     -webkit-transition: .4s;
     transition: .4s;
-    border-radius: 30px;
+    border-radius: 50px;
   }
   
   .slider-card {
@@ -145,9 +147,9 @@
     content: "";
     height: var(--circle-dim);
     width: var(--circle-dim);
-    border-radius: 20px;
-    left: 0.6em;
-    bottom: 0.6em;
+    border-radius: 80px;
+    left: 0.9em;
+    bottom: 0.9em;
     -webkit-transition: .4s;
     transition: .4s;
     pointer-events: none;
@@ -186,11 +188,68 @@
   }
   
   input:checked ~ .slider-card {
-    -webkit-transform: translateX(3em);
-        -ms-transform: translateX(3em);
-            transform: translateX(3em);
+    -webkit-transform: translateX(10em);
+        -ms-transform: translateX(10em);
+            transform: translateX(10em);
   }
   
   input:checked ~ .slider {
     background-color: #9ed99c;
   }
+
+
+  /* -------------------------------range slider------------------------------- */
+  
+  
+/* Set background color for RangeSlider */
+.rheostat {
+  background-color: #ddd;
+}
+
+/* Set color for RangeSlider track and thumb */
+.rheostat-background {
+  background-color: #252526;
+}
+.rheostat-handle {
+  background-color: #252526;
+}
+
+/* Set font color for RangeSlider labels */
+.rheostat-value {
+  color: #ddd;
+}
+
+/* Set style for RangeSlider tooltip */
+.rheostat-tooltip {
+  background-color: #333;
+  color: #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Set style for RangeSlider tooltip arrow */
+.rheostat-tooltip:before {
+  border-bottom-color: #333;
+}
+
+/* Set style for RangeSlider tooltip arrow on hover */
+.rheostat-tooltip:hover:before {
+  border-bottom-color: transparent;
+  border-top-color: #333;
+}
+.data{
+  margin-left: 100px;
+  margin-bottom: 20px;
+  padding: 30px;
+  width: max-content;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+}
+
+.speed{
+  color: white;
+  font-size:xx-large;
+}

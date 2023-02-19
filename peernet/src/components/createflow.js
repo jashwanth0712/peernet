@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RangeSlider from 'react-bootstrap-range-slider';
 import { Framework } from "@superfluid-finance/sdk-core";
+import bandwidth_img from '../images/bandwidth.png'
 import {
   Button,
   Form,
@@ -240,23 +241,7 @@ export const CreateFlow = (props) => {
   };
   return (
     <div>
-      <Form>
-        
-      <FormGroup className="mb-3">
-      <h1>Bandwidth</h1>
-      <RangeSlider
-        name="flowRate"
-        value={flowRate}
-        onChange={handleFlowRateChange}
-        min={0}
-        max={1000000}
-        step={10000}
-        tooltip={false}
-
-      />
-      <p>{flowRate/1000}Mbps</p>
-      
-    </FormGroup>
+     
     <label class="switch">
   <input type="checkbox" onClick={()=>{
     if(vpnconnected===true){setRecipient(props.provider);
@@ -279,6 +264,23 @@ export const CreateFlow = (props) => {
     <div class="slider-card-face slider-card-back"></div>
   </div>
 </label>
+ <Form>
+        <img classname="bandwidth" src={bandwidth_img} alt="connected" />
+
+        
+      <FormGroup className="data">
+      <RangeSlider className="rheostat"
+        name="flowRate"
+        value={flowRate}
+        onChange={handleFlowRateChange}
+        min={0}
+        max={1000000}
+        step={10000}
+        tooltip={false}
+      />
+      <p className="speed">{flowRate/1000}Mbps</p>
+      
+    </FormGroup>
  </Form>
     </div>
   );

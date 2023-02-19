@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './accountcard.css'
+import goerli_img from '../images/goerli.png'
 let account;
 
 export const AccountCard = () => {
@@ -59,7 +60,7 @@ export const AccountCard = () => {
   }
   return (
     <div class="accountcard accountcard-5">
-  <div class="accountcard__icon"><h1>Goerli</h1></div>
+<img classname="goerli" src={goerli_img} alt="connected" />
   <p class="accountcard__exit"></p>
   <div class="text">
   {(currentAccount.length===0)?`Not connected`:`${currentAccount.substring(0, 6)}.....${currentAccount.substring(
