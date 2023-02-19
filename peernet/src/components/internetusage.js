@@ -1,32 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { ReactInternetSpeedMeter } from "react-internet-meter";
 
-export const InternetUsage=()=> {
- 
-  const [checkSpeed, SetCheckSpeed] = React.useState(
-    "Finding internet speed."
-  );
+export function InternetUsage() {
+  const [speed, setSpeed] = useState(0);
+  const [usage, setUsage] = useState(0);
+
+  useEffect(() => {
+    // simulate fetching internet speed and usage data
+    const fetchInternetData = () => {
+      const randomSpeed = Math.floor(Math.random() * 100);
+      const randomUsage = Math.floor(Math.random() * 100);
+      setSpeed(randomSpeed);
+      setUsage(randomUsage);
+    };
+    fetchInternetData();
+    const interval = setInterval(fetchInternetData, 5000); // fetch new data every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
-      <h2 className="mb-3">React Find Internet Speed Example</h2>
-      <ReactInternetSpeedMeter
-        txtSubHeading="Internet connection is slow"
-        outputType="" // "alert"/"modal"/"empty"
-        customClassName={null}
-        pingInterval={2000} // milliseconds
-        txtMainHeading="Opps..."
-        thresholdUnit="megabyte" // "byte" , "kilobyte", "megabyte"
-        threshold={50}
-        imageUrl="https://i.postimg.cc/sft772VP/speedometer.png"
-        downloadSize="1561257" //bytes
-        callbackFunctionOnNetworkDown={(data) =>
-          console.log(`Internet speed : ${data}`)
-        }
-        callbackFunctionOnNetworkTest={(data) => SetCheckSpeed(data)}
-      />
-      <div className="card-body mt-4">
-        <span className="display-1">{checkSpeed} MB/s</span>
-      </div>
+      <label>Internet Speed:</label>
+      <input type="text" value={`${speed} Mbps`} readOnly />
+      <label>Internet Usage:</label>
+      <input type="text" value={`${usage} GB`} readOnly />
     </div>
   );
 }

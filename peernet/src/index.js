@@ -17,14 +17,18 @@ const colors = {
   },
 };
 const theme = extendTheme({ colors });
+
+const provider = new AuthProvider("5dbf9aaee836f4e74e237f82ed37810178a04352") // required
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-
-      <ChakraProvider theme={theme}>
+<ProvideAuth provider={provider}>
+<ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
 
+</ProvideAuth>
+  
   </React.StrictMode>
 );
 
