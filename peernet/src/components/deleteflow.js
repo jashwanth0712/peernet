@@ -9,7 +9,7 @@ import {
   Card
 } from "react-bootstrap";
 import { ethers } from "ethers";
-
+import './createflow.css'
 let account;
 
 //where the Superfluid logic takes place
@@ -58,8 +58,8 @@ async function deleteExistingFlow(recipient) {
   }
 }
 
-export const DeleteFlow = () => {
-  const [recipient, setRecipient] = useState("");
+export const DeleteFlow = (props) => {
+  const [recipient, setRecipient] = useState(props.provider);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [currentAccount, setCurrentAccount] = useState("");
 
@@ -117,76 +117,36 @@ export const DeleteFlow = () => {
     checkIfWalletIsConnected();
   }, []);
 
-  function calculateFlowRate(amount) {
-    if (typeof Number(amount) !== "number" || isNaN(Number(amount)) === true) {
-      alert("You can only calculate a flowRate based on a number");
-      return;
-    } else if (typeof Number(amount) === "number") {
-      if (Number(amount) === 0) {
-        return 0;
-      }
-      const amountInWei = ethers.BigNumber.from(amount);
-      const monthlyAmount = ethers.utils.formatEther(amountInWei.toString());
-      const calculatedFlowRate = monthlyAmount * 3600 * 24 * 30;
-      return calculatedFlowRate;
-    }
-  }
+
 
   function DeleteButton({ isLoading, children, ...props }) {
     return (
-      <Button variant="success" className="button" {...props}>
-        {isButtonLoading ? <Spinner animation="border" /> : children}
+      <Button variant="success" className="noselect" {...props}>
+        <span class="text">Delete</span><span class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
+            </path>
+          </svg>
+        </span>
       </Button>
     );
   }
 
-  const handleRecipientChange = (e) => {
-    setRecipient(() => ([e.target.name] = e.target.value));
-  };
 
   return (
     <div>
-      <h2>Delete a Flow</h2>
-      {currentAccount === "" ? (
-        <button id="connectWallet" className="button" onClick={connectWallet}>
-          Connect Wallet
-        </button>
-      ) : (
-        <Card className="connectedWallet">
-          {`${currentAccount.substring(0, 4)}...${currentAccount.substring(
-            38
-          )}`}
-        </Card>
-      )}
-      <Form>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="recipient"
-            value={recipient}
-            onChange={handleRecipientChange}
-            placeholder="Enter recipient address"
-          ></FormControl>
-        </FormGroup>
-        <FormGroup className="mb-3"></FormGroup>
-        <DeleteButton
-          onClick={() => {
-            setIsButtonLoading(true);
-            deleteExistingFlow(recipient);
-            setTimeout(() => {
-              setIsButtonLoading(false);
-            }, 1000);
-          }}
-        >
-          Click to Create Your Stream
-        </DeleteButton>
-      </Form>
-
-      <div className="description">
-        <p>
-          Go to the DeleteFlow.js component and look at the <b>deleteFlow() </b>
-          function to see under the hood
-        </p>
-      </div>
+      <DeleteButton
+        onClick={() => {
+          setRecipient(props.provider)
+          setIsButtonLoading(true);
+          deleteExistingFlow(recipient);
+          setTimeout(() => {
+            setIsButtonLoading(false);
+          }, 1000);
+        }}
+      >
+        Delete
+      </DeleteButton>
     </div>
   );
 };

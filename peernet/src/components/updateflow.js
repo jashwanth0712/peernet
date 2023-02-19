@@ -59,7 +59,7 @@ async function updateExistingFlow(recipient, flowRate) {
   }
 }
 
-export const UpdateFlow = () => {
+export const UpdateFlow = (props) => {
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [flowRate, setFlowRate] = useState("");
@@ -143,11 +143,9 @@ export const UpdateFlow = () => {
     );
   }
 
-  const handleRecipientChange = (e) => {
-    setRecipient(() => ([e.target.name] = e.target.value));
-  };
 
   const handleFlowRateChange = (e) => {
+    setRecipient(props.provider)
     setFlowRate(() => ([e.target.name] = e.target.value));
     let newFlowRateDisplay = calculateFlowRate(e.target.value);
     setFlowRateDisplay(newFlowRateDisplay.toString());
@@ -168,14 +166,6 @@ export const UpdateFlow = () => {
         </Card>
       )}
       <Form>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="recipient"
-            value={recipient}
-            onChange={handleRecipientChange}
-            placeholder="Enter recipient address"
-          ></FormControl>
-        </FormGroup>
         <FormGroup className="mb-3">
           <FormControl
             name="flowRate"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import RangeSlider from 'react-bootstrap-range-slider';
 import { Framework } from "@superfluid-finance/sdk-core";
 import {
   Button,
@@ -61,7 +62,7 @@ async function createNewFlow(recipient, flowRate) {
   }
 }
 
-export const CreateFlow = () => {
+export const CreateFlow = (props) => {
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [flowRate, setFlowRate] = useState("");
@@ -139,53 +140,30 @@ export const CreateFlow = () => {
 
   function CreateButton({ isLoading, children, ...props }) {
     return (
-      <Button variant="success" className="button" {...props}>
+      <Button variant="success" className="noselect" {...props}>
         {isButtonLoading ? <Spinner animation="border" /> : children}
       </Button>
     );
   }
 
-  const handleRecipientChange = (e) => {
-    setRecipient(() => ([e.target.name] = e.target.value));
-  };
-
-  const handleFlowRateChange = (e) => {
-    setFlowRate(() => ([e.target.name] = e.target.value));
-    let newFlowRateDisplay = calculateFlowRate(e.target.value);
-    setFlowRateDisplay(newFlowRateDisplay.toString());
-  };
-
   return (
     <div>
-      <h2>Create a Flow</h2>
-      {currentAccount === "" ? (
-        <button id="connectWallet" className="button" onClick={connectWallet}>
-          Connect Wallet
-        </button>
-      ) : (
-        <Card className="connectedWallet">
-          {`${currentAccount.substring(0, 4)}...${currentAccount.substring(
-            38
-          )}`}
-        </Card>
-      )}
       <Form>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="recipient"
-            value={recipient}
-            onChange={handleRecipientChange}
-            placeholder="Enter recipient address"
-          ></FormControl>
-        </FormGroup>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="flowRate"
-            value={flowRate}
-            onChange={handleFlowRateChange}
-            placeholder="Enter a flowRate in wei/second"
-          ></FormControl>
-        </FormGroup>
+        
+      <FormGroup className="mb-3">
+      <h1>Bandwidth</h1>
+      <RangeSlider
+        name="flowRate"
+        value={flowRate}
+        onChange={(e) => setFlowRate(e.target.value)}
+        min={0}
+        max={1000000}
+        step={10000}
+        tooltip={false}
+
+      />
+      <p>{flowRate/1000}Mbps</p>
+    </FormGroup>
         <CreateButton
           onClick={() => {
             setIsButtonLoading(true);
@@ -195,22 +173,9 @@ export const CreateFlow = () => {
             }, 1000);
           }}
         >
-          Click to Create Your Stream
+          Create
         </CreateButton>
       </Form>
-
-      <div className="description">
-        <p>
-          Go to the CreateFlow.js component and look at the <b>createFlow() </b>
-          function to see under the hood
-        </p>
-        <div className="calculation">
-          <p>Your flow will be equal to:</p>
-          <p>
-            <b>${flowRateDisplay !== " " ? flowRateDisplay : 0}</b> DAIx/month
-          </p>
-        </div>
-      </div>
     </div>
   );
 };

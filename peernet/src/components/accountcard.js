@@ -46,7 +46,7 @@ export const AccountCard = () => {
                   console.log(res) 
           })
       // Check if user is connected to Mainnet
-      if(chainId != '0x5') {
+      if(chainId !== '0x5') {
         alert("Please connect to Mainnet");
       } else {
         let wallet = accounts[0];
@@ -62,12 +62,12 @@ export const AccountCard = () => {
   <div class="accountcard__icon"><h1>Goerli</h1></div>
   <p class="accountcard__exit"></p>
   <div class="text">
-  {`${currentAccount.substring(0, 6)}.....${currentAccount.substring(
+  {(currentAccount.length===0)?`Not connected`:`${currentAccount.substring(0, 6)}.....${currentAccount.substring(
             36
           )}`}
   </div>
   <p class="accountcard__apply">
-      <button className='button2'onClick=    {connectWallet}>Connect</button>
+      <button className='button2'onClick=    {connectWallet}> {(currentAccount.length===0)?`Connect`:`Connected`}</button>
     <a class="accountcard__link" href="#"> <i class="fas fa-arrow-right"></i></a>
   </p>
 </div>
