@@ -29,6 +29,7 @@
     "react-icons": "^4.7.1",
     "react-internet-meter": "^1.1.1",
     "react-p5-wrapper": "^4.1.0",
+    "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },

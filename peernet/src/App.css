@@ -11,7 +11,14 @@
 .App {
   text-align: center;
 }
-
+.table{
+  margin-top: 200px;
+  margin-left: 50px;
+}
+.table th{
+  margin-left:50px;
+  padding: 50px;
+}
 
 .App-logo {
   height: 40vmin;
