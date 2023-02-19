@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ReactInternetSpeedMeter } from "react-internet-meter";
+
 export const InternetUsage=()=> {
+ 
   const [checkSpeed, SetCheckSpeed] = React.useState(
     "Finding internet speed."
   );
