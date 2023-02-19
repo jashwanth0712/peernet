@@ -8,14 +8,12 @@ import {
   Spinner,
   Card
 } from "react-bootstrap";
-import "./createflow.css";
 import { ethers } from "ethers";
 
 let account;
 
 //where the Superfluid logic takes place
-async function createNewFlow(recipient, flowRate) {
-  
+async function updateExistingFlow(recipient, flowRate) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
@@ -36,21 +34,21 @@ async function createNewFlow(recipient, flowRate) {
   console.log(daix);
 
   try {
-    const createFlowOperation = daix.createFlow({
+    const updateFlowOperation = daix.updateFlow({
       sender: await superSigner.getAddress(),
       receiver: recipient,
       flowRate: flowRate
       // userData?: string
     });
 
-    console.log(createFlowOperation);
-    console.log("Creating your stream...");
+    console.log(updateFlowOperation);
+    console.log("Updating your stream...");
 
-    const result = await createFlowOperation.exec(superSigner);
+    const result = await updateFlowOperation.exec(superSigner);
     console.log(result);
 
     console.log(
-      `Congrats - you've just created a money stream!
+      `Congrats - you've just updated a money stream!
     `
     );
   } catch (error) {
@@ -61,7 +59,7 @@ async function createNewFlow(recipient, flowRate) {
   }
 }
 
-export const CreateFlow = () => {
+export const UpdateFlow = () => {
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [flowRate, setFlowRate] = useState("");
@@ -137,7 +135,7 @@ export const CreateFlow = () => {
     }
   }
 
-  function CreateButton({ isLoading, children, ...props }) {
+  function UpdateButton({ isLoading, children, ...props }) {
     return (
       <Button variant="success" className="button" {...props}>
         {isButtonLoading ? <Spinner animation="border" /> : children}
@@ -157,7 +155,7 @@ export const CreateFlow = () => {
 
   return (
     <div>
-      <h2>Create a Flow</h2>
+      <h2>Update a Flow</h2>
       {currentAccount === "" ? (
         <button id="connectWallet" className="button" onClick={connectWallet}>
           Connect Wallet
@@ -186,22 +184,22 @@ export const CreateFlow = () => {
             placeholder="Enter a flowRate in wei/second"
           ></FormControl>
         </FormGroup>
-        <CreateButton
+        <UpdateButton
           onClick={() => {
             setIsButtonLoading(true);
-            createNewFlow(recipient, flowRate);
+            updateExistingFlow(recipient, flowRate);
             setTimeout(() => {
               setIsButtonLoading(false);
             }, 1000);
           }}
         >
-          Click to Create Your Stream
-        </CreateButton>
+          Click to Update Your Stream
+        </UpdateButton>
       </Form>
 
       <div className="description">
         <p>
-          Go to the CreateFlow.js component and look at the <b>createFlow() </b>
+          Go to the UpdateFlow.js component and look at the <b>updateFlow() </b>
           function to see under the hood
         </p>
         <div className="calculation">
@@ -214,5 +212,3 @@ export const CreateFlow = () => {
     </div>
   );
 };
-
-export default CreateFlow;

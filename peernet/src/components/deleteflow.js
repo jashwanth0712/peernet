@@ -8,14 +8,12 @@ import {
   Spinner,
   Card
 } from "react-bootstrap";
-import "./createflow.css";
 import { ethers } from "ethers";
 
 let account;
 
 //where the Superfluid logic takes place
-async function createNewFlow(recipient, flowRate) {
-  
+async function deleteExistingFlow(recipient) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
@@ -36,21 +34,20 @@ async function createNewFlow(recipient, flowRate) {
   console.log(daix);
 
   try {
-    const createFlowOperation = daix.createFlow({
-      sender: await superSigner.getAddress(),
-      receiver: recipient,
-      flowRate: flowRate
+    const deleteFlowOperation = daix.deleteFlow({
+      sender: await signer.getAddress(),
+      receiver: recipient
       // userData?: string
     });
 
-    console.log(createFlowOperation);
-    console.log("Creating your stream...");
+    console.log(deleteFlowOperation);
+    console.log("Deleting your stream...");
 
-    const result = await createFlowOperation.exec(superSigner);
+    const result = await deleteFlowOperation.exec(superSigner);
     console.log(result);
 
     console.log(
-      `Congrats - you've just created a money stream!
+      `Congrats - you've just updated a money stream!
     `
     );
   } catch (error) {
@@ -61,11 +58,9 @@ async function createNewFlow(recipient, flowRate) {
   }
 }
 
-export const CreateFlow = () => {
+export const DeleteFlow = () => {
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const [flowRate, setFlowRate] = useState("");
-  const [flowRateDisplay, setFlowRateDisplay] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
 
   const connectWallet = async () => {
@@ -137,7 +132,7 @@ export const CreateFlow = () => {
     }
   }
 
-  function CreateButton({ isLoading, children, ...props }) {
+  function DeleteButton({ isLoading, children, ...props }) {
     return (
       <Button variant="success" className="button" {...props}>
         {isButtonLoading ? <Spinner animation="border" /> : children}
@@ -149,15 +144,9 @@ export const CreateFlow = () => {
     setRecipient(() => ([e.target.name] = e.target.value));
   };
 
-  const handleFlowRateChange = (e) => {
-    setFlowRate(() => ([e.target.name] = e.target.value));
-    let newFlowRateDisplay = calculateFlowRate(e.target.value);
-    setFlowRateDisplay(newFlowRateDisplay.toString());
-  };
-
   return (
     <div>
-      <h2>Create a Flow</h2>
+      <h2>Delete a Flow</h2>
       {currentAccount === "" ? (
         <button id="connectWallet" className="button" onClick={connectWallet}>
           Connect Wallet
@@ -178,41 +167,26 @@ export const CreateFlow = () => {
             placeholder="Enter recipient address"
           ></FormControl>
         </FormGroup>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="flowRate"
-            value={flowRate}
-            onChange={handleFlowRateChange}
-            placeholder="Enter a flowRate in wei/second"
-          ></FormControl>
-        </FormGroup>
-        <CreateButton
+        <FormGroup className="mb-3"></FormGroup>
+        <DeleteButton
           onClick={() => {
             setIsButtonLoading(true);
-            createNewFlow(recipient, flowRate);
+            deleteExistingFlow(recipient);
             setTimeout(() => {
               setIsButtonLoading(false);
             }, 1000);
           }}
         >
           Click to Create Your Stream
-        </CreateButton>
+        </DeleteButton>
       </Form>
 
       <div className="description">
         <p>
-          Go to the CreateFlow.js component and look at the <b>createFlow() </b>
+          Go to the DeleteFlow.js component and look at the <b>deleteFlow() </b>
           function to see under the hood
         </p>
-        <div className="calculation">
-          <p>Your flow will be equal to:</p>
-          <p>
-            <b>${flowRateDisplay !== " " ? flowRateDisplay : 0}</b> DAIx/month
-          </p>
-        </div>
       </div>
     </div>
   );
 };
-
-export default CreateFlow;
