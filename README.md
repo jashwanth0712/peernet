@@ -1,4 +1,5 @@
 # Peernet: Decentralized VPN Service Provider
+# `winner of EthforALL Best tooling with superfluid`
 Peernet is a decentralized VPN service provider that offers fast, secure, and private internet access to users around the world.
 ### Decentralized Network
 - Unlike traditional VPNs that rely on centralized servers, Peernet uses a network of peer-to-peer connections to create a decentralized and distributed network.
